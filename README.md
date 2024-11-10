@@ -238,3 +238,51 @@ Using views as properties can make your SwiftUI code more modular, organized, an
    - SwiftUI is designed to efficiently handle view composition, so breaking up views into subviews does not impact performance. SwiftUI intelligently manages rendering and reuses view structures for optimal efficiency.
 
 By composing views into smaller subviews, you create a modular and reusable codebase, making SwiftUI projects easier to read, maintain, and extend.
+
+## Custom Modifiers
+
+1. **Creating Custom Modifiers**:
+   - SwiftUI allows us to create custom modifiers by conforming to the `ViewModifier` protocol, which lets you encapsulate a set of view transformations for easy reuse.
+   - Example:
+
+     ```swift
+     struct Title: ViewModifier {
+       func body(content: Content) -> some View {
+         content
+           .font(.largeTitle)
+           .foregroundStyle(.white)
+           .padding()
+           .background(.blue)
+           .clipShape(RoundedRectangle(cornerRadius: 10))
+       }
+     }
+     ```
+
+2. **Applying Custom Modifiers**
+   - You can apply custom modifiers using the `.modifier()` method:
+
+     ```swift
+     Text("Hello, world!")
+       .modifier(Title())
+     ```
+
+3. **Creating View Extensions for Readability**
+   - A best practice is to add an extension on `View` to make custom modifiers more convenient and readable.
+   - Example:
+
+     ```swift
+     extension View {
+       func titleStyle() -> some View {
+         modifier(Title())
+       }
+     }
+     ```
+
+   - Now you can apply the modifier as `.titleStyle()` for cleaner syntax:
+
+     ```swift
+     Text("Hello, world!")
+       .titleStyle()
+     ```
+
+Custom modifiers help organize and reuse view styling across your SwiftUI project, keeping code modular and consistent.
