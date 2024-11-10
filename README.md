@@ -69,3 +69,44 @@ Understanding the effect of modifier order is essential to controlling view comp
    - `@ViewBuilder` enables writing layouts with multiple subviews without explicitly creating a composite view type, making the code cleaner and more readable.
 
 Using `some View` simplifies SwiftUI's type management while allowing developers to write flexible, declarative UI code.
+
+## Conditional Modifiers
+
+1. **Conditional Modifier Application**:
+   - It’s common to apply modifiers only when certain conditions are met. For example, changing text color based on a Boolean flag.
+
+2. **Using the Ternary Operator**:
+   - The ternary operator (condition ? trueValue : falseValue) is often the simplest and most performant way to apply conditional modifiers.
+   - It provides three parts: condition (What), result if true (True), and result if false (False) – hence, "WTF."
+
+3. **Performance Advantage**:
+   - Using a ternary operator is more efficient than using `if` statements because it doesn’t create an entirely new view structure; it just applies the condition to the existing view.
+   - Example:
+
+     ```swift
+     Button("Hello, world!") {
+       useRedText.toggle()
+     }
+     .foregroundStyle(useRedText ? .red : .blue)
+     ```
+
+4. **Avoiding `if-else` When Possible**
+   - An `if-else` structure, like the one below, requires creating separate views, which can impact performance and readability:
+
+     ```swift
+     if useRedText {
+       Button("Hello, world!") {
+         useRedText.toggle()
+       }
+       .foregroundStyle(.red)
+     } else {
+       Button("Hello, world!") {
+         useRedText.toggle()
+       }
+       .foregroundStyle(.blue)
+     }
+     ```
+
+   - When possible, prefer the ternary operator for simple conditional modifiers. However, if more complex conditional logic is required, `if` statements may be unavoidable.
+
+Using the ternary operator allows for cleaner code and better performance in SwiftUI by keeping conditions concise and efficient.
