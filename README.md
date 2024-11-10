@@ -196,3 +196,45 @@ Understanding environment modifiers helps to create cleaner code by applying con
      ```
 
 Using views as properties can make your SwiftUI code more modular, organized, and easier to maintain, especially when handling multiple views.
+
+## View Composition
+
+1. **Creating Subviews for Modularity**:
+   - SwiftUI allows us to create custom subviews to build a modular, reusable UI. This keeps code organized and makes complex layouts easier to manage.
+   - Example:
+
+     ```swift
+     struct CapsuleText: View {
+       var text: String
+
+       var body: some View {
+         Text(text)
+           .font(.largeTitle)
+           .padding()
+           .foregroundStyle(.white)
+           .background(.blue)
+           .clipShape(Capsule())
+       }
+     }
+     ```
+
+2. **Using Custom Subviews**:
+   - Once defined, you can use your custom view like any other SwiftUI view:
+
+     ```swift
+     CapsuleText(text: "First")
+     ```
+
+3. **Combining Built-In and Custom Modifiers**:
+   - You can store common modifiers within a custom view while applying additional modifiers externally as needed. This enhances flexibility while keeping code concise.
+   - Example:
+
+     ```swift
+     CapsuleText(text: "First")
+       .foregroundStyle(.blue) // Overrides the default style if needed
+     ```
+
+4. **Performance Considerations**:
+   - SwiftUI is designed to efficiently handle view composition, so breaking up views into subviews does not impact performance. SwiftUI intelligently manages rendering and reuses view structures for optimal efficiency.
+
+By composing views into smaller subviews, you create a modular and reusable codebase, making SwiftUI projects easier to read, maintain, and extend.
