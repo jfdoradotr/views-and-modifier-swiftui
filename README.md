@@ -152,3 +152,47 @@ Using the ternary operator allows for cleaner code and better performance in Swi
    - There is no straightforward way to know which modifiers are environment modifiers versus regular modifiers. Typically, modifiers affecting text appearance (e.g., `.font`, `.foregroundStyle`) are environment modifiers, while those affecting view structure (e.g., `.blur`, `.opacity`) are regular modifiers.
 
 Understanding environment modifiers helps to create cleaner code by applying consistent styles across multiple views and selectively overriding them when necessary.
+
+## Views as Properties
+
+1. **Simplifying Complex View Hierarchies**:
+   - Using properties for views can simplify code, especially for reusable or complex view hierarchies.
+   - Example with a stored property:
+
+     ```swift
+     let motto1 = Text("Draco")
+     ```
+
+2. **Computed Properties for Views**:
+   - SwiftUI allows using computed properties for views, which is especially useful for constructing dynamic or complex views.
+   - Example with a computed property:
+
+     ```swift
+     var motto1: some View { Text("Draco") }
+     ```
+
+3. **Grouping Views Without Layout Constraints**:
+   - If you have multiple views that don’t need specific layout arrangement, you can use a `Group` instead of a `Stack`.
+   - Example:
+
+     ```swift
+     var spells: some View {
+       Group {
+         Text("Lumos")
+         Text("Obliviate")
+       }
+     }
+     ```
+
+4. **Using `@ViewBuilder` for Flexibility**:
+   - `@ViewBuilder` allows combining multiple views in a computed property without needing a container like `Group`. This is often preferred for flexible view composition.
+   - Example:
+
+     ```swift
+     @ViewBuilder var spells: some View {
+       Text("Lumos")
+       Text("Obliviate")
+     }
+     ```
+
+Using views as properties can make your SwiftUI code more modular, organized, and easier to maintain, especially when handling multiple views.
