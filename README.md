@@ -110,3 +110,45 @@ Using `some View` simplifies SwiftUI's type management while allowing developers
    - When possible, prefer the ternary operator for simple conditional modifiers. However, if more complex conditional logic is required, `if` statements may be unavoidable.
 
 Using the ternary operator allows for cleaner code and better performance in SwiftUI by keeping conditions concise and efficient.
+
+## Environment Modifiers in SwiftUI
+
+1. **Applying Modifiers to Containers**:
+   - Some modifiers can be applied to container views (e.g., `VStack`, `HStack`) to affect all child views within them. This is known as an **environment modifier**.
+   - Example:
+
+     ```swift
+     VStack {
+       Text("Hello")
+       Text("World")
+     }
+     .font(.title) // Applies `.font(.title)` to all child views within the VStack
+     ```
+
+2. **Overriding Environment Modifiers**:
+   - Child views can override environment modifiers applied by the parent container.
+   - Example:
+
+     ```swift
+     VStack {
+       Text("Hello").font(.largeTitle) // Overrides `.font(.title)` for this Text view only
+       Text("World")
+     }
+     .font(.title)
+     ```
+
+3. **Limitations of Environment Modifiers**
+   - Not all modifiers are environment modifiers. For instance, `.blur()` is a regular modifier and cannot be overridden by child views.
+   - Example:
+
+     ```swift
+     VStack {
+       Text("Hello").blur(radius: 0) // Still affected by the parent’s blur radius
+     }
+     .blur(radius: 5) // Applies blur to all child views, and individual child views cannot override it
+     ```
+
+4. **Identifying Environment Modifiers**
+   - There is no straightforward way to know which modifiers are environment modifiers versus regular modifiers. Typically, modifiers affecting text appearance (e.g., `.font`, `.foregroundStyle`) are environment modifiers, while those affecting view structure (e.g., `.blur`, `.opacity`) are regular modifiers.
+
+Understanding environment modifiers helps to create cleaner code by applying consistent styles across multiple views and selectively overriding them when necessary.
