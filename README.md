@@ -49,3 +49,23 @@ By using structs, SwiftUI embraces immutability and simplicity, which aligns wit
    - SwiftUI allows you to apply the same modifier multiple times for compound effects. For instance, adding multiple `.padding()` modifiers can create layered padding spaces.
 
 Understanding the effect of modifier order is essential to controlling view composition and layout in SwiftUI.
+
+## Why Does SwiftUI Use `some View` for its View Type
+
+1. **Indicates Conformance to the `View` Protocol**
+   - `some View` tells Swift that the body will return a type that conforms to the `View` protocol, without specifying the exact view type.
+   - This allows Swift to work with complex view structures while enforcing type safety.
+
+2. **Type-Specific Return Requirement**
+   - Swift requires the body property to return a concrete view type. While `var body: Text` is allowed, `var body: View` is not because `View` itself is a protocol and doesn’t specify an exact type.
+   - Using `some View` signals that a specific view type will be returned, even if it's complex or composite, without exposing the precise underlying type to SwiftUI’s users.
+
+3. **Handling Complex View Hierarchies**
+   - When you use containers like `VStack` or `HStack` with multiple views, SwiftUI composes them into a single type called `TupleView`.
+   - This hidden composition keeps `some View` manageable, abstracting away the complexity of deeply nested view types.
+
+4. **Automatic `ViewBuilder` Support**
+   - SwiftUI’s body property implicitly uses `@ViewBuilder`, a special attribute that allows multiple views to be combined into a single return type.
+   - `@ViewBuilder` enables writing layouts with multiple subviews without explicitly creating a composite view type, making the code cleaner and more readable.
+
+Using `some View` simplifies SwiftUI's type management while allowing developers to write flexible, declarative UI code.
